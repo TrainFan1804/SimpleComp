@@ -17,7 +17,7 @@ import src.main.app.token.Token;
  * The main class for the lexer
  * 
  * @author o.le
- * @version 0.23
+ * @version 0.3
  * @since 0.1
  */
 public class AntLex {

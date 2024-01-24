@@ -4,7 +4,7 @@ package src.main.app.token;
  * All tokens for the "ant" language
  * 
  * @author o.le
- * @version 0.2
+ * @version 0.3
  * @since 0.1
  */
 public enum TokenType {

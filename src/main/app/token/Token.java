@@ -4,7 +4,7 @@ package src.main.app.token;
  * The class for wrapping up the tokens
  * 
  * @author o.le
- * @version 0.14
+ * @version 0.2
  * @since 0.1
  */
 public class Token {

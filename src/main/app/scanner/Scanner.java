@@ -13,7 +13,7 @@ import src.main.app.token.TokenType;
  * The class the token scanner
  * 
  * @author o.le
- * @version 0.23
+ * @version 0.3
  * @since 0.1
  */
 public class Scanner {
