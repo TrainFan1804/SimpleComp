@@ -23,6 +23,7 @@ public class Scanner {
 
     private int posStartOfLexeme; // start position of the current lexeme
     private int posCurrentChar; // position of current char
+    private int currentLine;
 
     /**
      * Construct an token scanner
@@ -46,7 +47,7 @@ public class Scanner {
             this.scanToken();
         }
 
-        this.tokens.add(new Token(TokenType.EOF, "", null));
+        this.tokens.add(new Token(TokenType.EOF, "", null, this.currentLine));
         return this.tokens;
     }
 
@@ -55,22 +56,43 @@ public class Scanner {
      */
     private void scanToken() {
         
-        char currentChar = source.charAt(this.posCurrentChar++); // each time the pointer of the current char is moving one forward
+        char currentChar = returnNext(); // each time the pointer of the current char is moving one forward
 
         switch (currentChar) {
 
+            case '(': addToken(TokenType.LEFT_PAREN); break;
+            case ')': addToken(TokenType.RIGHT_PAREN); break;
+            case '{': addToken(TokenType.LEFT_BRACE); break;
+            case '}': addToken(TokenType.RIGHT_BRACE); break;
+            case ',': addToken(TokenType.COMMA); break;
             case '.': addToken(TokenType.DOT); break;
             case '-': addToken(TokenType.MINUS); break;
             case '+': addToken(TokenType.PLUS); break;
             case ';': addToken(TokenType.SEMICOLON); break;
             case '*': addToken(TokenType.STAR); break;
             case '/': addToken(TokenType.SLASH); break;
+            case '!':
+                addToken(isDoubleEx('=') ? TokenType.BANG_EQUAL : TokenType.BANG);
+                break;
+            case '=':
+                addToken(isDoubleEx('=') ? TokenType.EQUAL_EQUAL : TokenType.EQUAL);
+                break;
+            case '<':
+                addToken(isDoubleEx('=') ? TokenType.LESS_EQUAL : TokenType.LESS);
+                break;
+            case '>':
+                addToken(isDoubleEx('=') ? TokenType.GREATER_EQUAL : TokenType.GREATER);
             // ignore whitespaces, ' ', '\r' and '\t' are for different OS
             case ' ':
             case '\r':
             case '\t': break;
+            // The '#' is a comment so the lexer need to ignore this symbole. Also need to ignore the rest of the line
+            case '#': 
+                // check every char after the '#' till there is a '\n'
+                while (isComment() != '\n' && !isAtEnd()) returnNext(); 
+                break;
             default:
-                AntLex.error("Unexpected character.");;
+                AntLex.error(this.currentLine,"Unexpected character.");;
                 break;
         }
 
@@ -94,11 +116,45 @@ public class Scanner {
     private void addToken(TokenType type, Object literal) {
         
         String text = this.source.substring(this.posStartOfLexeme, posCurrentChar);
-        this.tokens.add(new Token(type, text, literal));
+        this.tokens.add(new Token(type, text, literal, this.currentLine));
     }
 
     /**
+     * Check if the current char is a new line
+     * 
+     * @return The current char
+     */
+    private char isComment() {
+
+        if (isAtEnd()) return '\0';
+        return this.source.charAt(posCurrentChar);
+    }
+    /**
+     * Check if there is a double expression like '!=' or '>='
+     * @param possible
+     * @return
+     */
+    private boolean isDoubleEx(char possible) {
+
+        if (this.isAtEnd()) return false;
+        if (this.source.charAt(this.posCurrentChar) != possible) return false;
+
+        this.posCurrentChar++;
+        return true;
+    }
+
+    /**
+     * Return the char after the pointer
+     * 
+     * @return The char
+     */
+    private char returnNext() {
+        return this.source.charAt(posCurrentChar++);
+    }
+    /**
      * Check if the source pointer is at the end of the file/prompt
+     * 
+     * @return If the pointer reached the last char
      */
     private boolean isAtEnd() {
         return this.posCurrentChar >= this.source.length(); 

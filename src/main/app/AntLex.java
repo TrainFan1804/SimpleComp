@@ -98,8 +98,8 @@ public class AntLex {
      * @param message The error message
      * @see AntLex#report
      */
-    public static void error(String message) {
-        report("", message);
+    public static void error(int errorLine, String message) {
+        report(errorLine, "", message);
     }
 
     /**
@@ -108,9 +108,9 @@ public class AntLex {
      * @param where Where is the error
      * @param message The error message
      */
-    private static void report(String where, String message) {
+    private static void report(int errorLine,String where, String message) {
 
-        System.err.println("Error" + where + ": " + message);
+        System.err.println("[line " + errorLine + "] Error" + where + ": " + message);
         hadError = true;
     }
 }

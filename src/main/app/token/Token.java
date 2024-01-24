@@ -12,6 +12,7 @@ public class Token {
     private final TokenType type;
     private final String lexeme;
     private final Object literal;
+    private final int line;
 
     /**
      * Create a token with specific attributes
@@ -19,11 +20,13 @@ public class Token {
      * @param type The type of the token
      * @param lexeme The lexeme of the token
      * @param literal The lexeme for literal objects
+     * @param line The line of the token
      */
-    public Token(TokenType type, String lexeme, Object literal) {
+    public Token(TokenType type, String lexeme, Object literal, int line) {
         this.type = type;
         this.lexeme = lexeme;
         this.literal = literal;
+        this.line = line;
     }
 
     @Override
