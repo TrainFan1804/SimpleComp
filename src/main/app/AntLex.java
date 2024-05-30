@@ -1,23 +1,23 @@
 package src.main.app;
 
 // java import
-import java.io.BufferedReader;
+import java.util.List;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.BufferedReader;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.List;
 
 // custom import
 import src.main.app.scanner.Scanner;
 import src.main.app.token.Token;
 
 /**
- * The main class for the lexer
+ * The main class for the lexer.
  * 
  * @author o.le
- * @version 0.3
+ * @version 0.34
  * @since 0.1
  */
 public class AntLex {
@@ -26,27 +26,23 @@ public class AntLex {
 
     public static void main(String[] args) throws IOException {
 
-        if (args.length > 1) {
-
-            System.out.println("Usage: jlox [script]");
-            System.exit(64);
-        } else if (args.length == 1) {
+        if (args.length == 1) {
             
             runFile(args[0]);
         } else {
             
             runPrompt();
         }
-
     }
 
     /**
-     * Read the file and check the tokens
+     * Read the file and check the tokens.
      * 
-     * @param path The path of the file
+     * @param path The path of the file.
      * @throws IOException
      */
     private static void runFile(String path) throws IOException {
+        
         byte[] bytes = Files.readAllBytes(Paths.get(path));
         run(new String(bytes, Charset.defaultCharset()));
         if (hadError)
@@ -54,7 +50,7 @@ public class AntLex {
     }
 
     /**
-     * Listen to the terminal to execute the language
+     * Listen to the terminal to execute the lexer.
      * 
      * @throws IOException
      */
@@ -72,13 +68,12 @@ public class AntLex {
             run(line);
             hadError = false;
         }
-
     }
 
     /**
-     * Run the source
+     * This method check the source the lexer is currently scanning.
      * 
-     * @param source The source the lexer is checking
+     * @param source The source the lexer is checking.
      */
     private static void run(String source) {
        
@@ -89,24 +84,25 @@ public class AntLex {
         
             System.out.println(t);
         }
-
     }
 
     /**
-     * When an error is happening
+     * When an error is happening.
      * 
-     * @param message The error message
+     * @param errorLine The line where the error happend.
+     * @param message The error message.
      * @see AntLex#report
      */
     public static void error(int errorLine, String message) {
+        
         report(errorLine, "", message);
     }
 
     /**
-     * The report from the error message
+     * Print the report from the error message.
      * 
-     * @param where Where is the error
-     * @param message The error message
+     * @param where The line where the error happend.
+     * @param message The error message.
      */
     private static void report(int errorLine,String where, String message) {
 
