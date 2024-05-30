@@ -10,23 +10,24 @@ import java.io.BufferedReader;
  * The main class for the lexer. This is the that run the lexer. 
  * 
  * @author                              o.le
- * @version                             0.42
+ * @version                             0.44
  * @since                               0.1
  */
 public class SimpleLexer {
-
-    private SimpleLexer() {}
-
+    
     public static void main(String[] args) throws IOException {
 
         SimpleLexer.runTerminal();
     }
 
     /**
-     * Read the user input and transform the input in tokens for the
-     * lexer.
-     * 
-     * @throws IOException
+     * Private constructor of the lexer because there is no need for a
+     * lexer object.
+     */
+    private SimpleLexer() {}
+
+    /**
+     * Read the user input from the terminal.
      */
     private static void runTerminal() {
         
@@ -47,6 +48,16 @@ public class SimpleLexer {
         }
     }
 
+    /**
+     * Send the input to the {@link SimpleScanner} to scan for the
+     * {@code Token} in the given input.
+     * <p>
+     * Right now this method will just print the tokens to the
+     * console!!!
+     * 
+     * @param line                      The line that is currently
+     *                                  scanning.
+     */
     private static void run(String line) {
 
         SimpleScanner simpleScanner = new SimpleScanner(line);

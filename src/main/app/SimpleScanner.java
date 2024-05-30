@@ -7,7 +7,7 @@ import java.util.List;
  * The class for the scanner. This class is scanning the given code.
  * 
  * @author                              o.le
- * @version                             0.4
+ * @version                             0.42
  * @since                               0.4
  */
 public class SimpleScanner {
