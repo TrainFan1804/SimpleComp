@@ -12,8 +12,9 @@ public enum TokenType {
 
     PLUS,
     MINUS,
-    MULTIPLICATION,
+    MULT,
     DIVISION,
+    EQUAL,
     EOF,
     PRINT;
 }

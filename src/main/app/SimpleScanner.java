@@ -7,14 +7,14 @@ import java.util.List;
  * The class for the scanner. This class is scanning the given code.
  * 
  * @author                              o.le
- * @version                             0.2
+ * @version                             0.31
  * @since                               0.4
  */
 public class SimpleScanner {
 
     private String source;
-    private int posStartOfToken;
-    private int posCurrentInToken;
+    private int posStartOfLexeme;
+    private int posCurrentChar;
 
     private List<Token> containedTokens;
 
@@ -28,7 +28,7 @@ public class SimpleScanner {
 
         while(!this.isAtEnd()) {
 
-            this.posStartOfToken = this.posCurrentInToken;
+            this.posStartOfLexeme = this.posCurrentChar;
             this.identifyToken();
         }
 
@@ -38,23 +38,17 @@ public class SimpleScanner {
 
     private void identifyToken() {
 
-        char currentChar = this.source.charAt(posCurrentInToken++);
+        char currentChar = this.source.charAt(posCurrentChar++);
 
         switch (currentChar) {
-            case '+':
-                this.addTokenToList(TokenType.PLUS);
-                break;
-            case '-':
-                this.addTokenToList(TokenType.MINUS);
-                break;
-            case '*':
-                this.addTokenToList(TokenType.MULTIPLICATION);
-                break;
-            case '/':
-                this.addTokenToList(TokenType.DIVISION);
-                break;
-            case 'e':
-                this.addTokenToList(TokenType.PRINT);
+            case '=': this.addTokenToList(TokenType.EQUAL); break;
+            case '+': this.addTokenToList(TokenType.PLUS); break;
+            case '-': this.addTokenToList(TokenType.MINUS); break;
+            case '*': this.addTokenToList(TokenType.MULT); break;
+            case '/': this.addTokenToList(TokenType.DIVISION); break;
+            case ' ':
+            case '\r':
+            case '\t':
                 break;
             default:
                 System.err.println("Error. Wrong symbol!");
@@ -64,13 +58,13 @@ public class SimpleScanner {
 
     private void addTokenToList(TokenType lexeme) {
 
-        String s = this.source.substring(this.posStartOfToken, 
-                                            this.posCurrentInToken);
+        String s = this.source.substring(this.posStartOfLexeme, 
+                                            this.posCurrentChar);
         this.containedTokens.add(new Token(s, lexeme));
     }
 
     private boolean isAtEnd() {
 
-        return this.posCurrentInToken == this.source.length();
+        return this.posCurrentChar == this.source.length();
     }
 }
