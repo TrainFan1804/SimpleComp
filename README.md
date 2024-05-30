@@ -1,2 +1,2 @@
 # antLexer
-This is the lexer for the "ant" language
+This is an simple lexer writen in java.
