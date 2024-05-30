@@ -8,7 +8,6 @@ import java.io.BufferedReader;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-
 // custom import
 import src.main.app.scanner.Scanner;
 import src.main.app.token.Token;
