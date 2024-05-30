@@ -1,16 +1,15 @@
 package src.main.app.scanner;
 
 // java import
-import java.util.ArrayList;
 import java.util.List;
-
+import java.util.ArrayList;
 // custom import
 import src.main.app.AntLex;
 import src.main.app.token.Token;
 import src.main.app.token.TokenType;
 
 /**
- * The class the token scanner
+ * The class of the token scanner.
  * 
  * @author o.le
  * @version 0.3
@@ -31,6 +30,7 @@ public class Scanner {
      * @param source The source the scanner is looking through
      */
     public Scanner(String source) {
+        
         this.source = source;
     }
 
@@ -104,6 +104,7 @@ public class Scanner {
      * @param type The type of the token
      */
     private void addToken(TokenType type) {
+        
         this.addToken(type, null);
     }
 
@@ -149,6 +150,7 @@ public class Scanner {
      * @return The char
      */
     private char returnNext() {
+        
         return this.source.charAt(posCurrentChar++);
     }
     /**
@@ -157,6 +159,7 @@ public class Scanner {
      * @return If the pointer reached the last char
      */
     private boolean isAtEnd() {
+        
         return this.posCurrentChar >= this.source.length(); 
     }
 
