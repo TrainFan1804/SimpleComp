@@ -85,7 +85,8 @@ public class SimpleScanner {
             case '\t':
                 break;
             default:
-                System.err.println("Error. Wrong symbol!");
+                
+                System.err.println("Error");
                 break;
         }
     }
