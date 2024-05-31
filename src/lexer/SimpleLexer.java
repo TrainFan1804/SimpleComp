@@ -10,7 +10,7 @@ import java.io.IOException;
  * The main class for the lexer. This is the that run the lexer. 
  * 
  * @author                              o.le
- * @version                             0.6
+ * @version                             0.7
  * @since                               0.1
  */
 public class SimpleLexer {
@@ -38,7 +38,7 @@ public class SimpleLexer {
             String line = " ";
             while (line.length() != 0) {
                         
-                System.out.print("> ");
+                System.out.print(">> ");
                 line = reader.readLine();
                 SimpleLexer.run(line);
             }
@@ -66,5 +66,15 @@ public class SimpleLexer {
             
             System.out.println(t);
         }
+    }
+
+    public static void error(String message) {
+
+        SimpleLexer.printErrorReport(message);
+    }
+
+    private static void printErrorReport(String message) {
+
+        System.err.println(">> Error: " + message);
     }
 }

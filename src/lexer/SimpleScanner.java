@@ -8,7 +8,7 @@ import java.util.LinkedList;
  * The class for the scanner. This class is scanning the given code.
  * 
  * @author                              o.le
- * @version                             1.2
+ * @version                             1.3
  * @since                               0.4
  */
 public class SimpleScanner {
@@ -101,7 +101,7 @@ public class SimpleScanner {
                 break;
             default:
                 
-                System.err.println("Invalid character: " + currentChar);
+                SimpleLexer.error("Invalid character: " + currentChar);
                 break;
         }
     }
