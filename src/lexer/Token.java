@@ -1,4 +1,4 @@
-package src.main.app;
+package src.lexer;
 
 /**
  * The class for the token. This class is containing an unique token.

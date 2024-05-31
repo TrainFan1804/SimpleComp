@@ -1,4 +1,4 @@
-package src.main.app;
+package src.lexer;
 
 /**
  * The class represent an exception that is thrown when the 

@@ -1,4 +1,4 @@
-package src.main.app;
+package src.lexer;
 
 // java import
 import java.util.List;
@@ -10,7 +10,7 @@ import java.io.IOException;
  * The main class for the lexer. This is the that run the lexer. 
  * 
  * @author                              o.le
- * @version                             0.51
+ * @version                             0.52
  * @since                               0.1
  */
 public class SimpleLexer {

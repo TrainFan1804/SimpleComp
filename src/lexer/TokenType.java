@@ -1,4 +1,4 @@
-package src.main.app;
+package src.lexer;
 
 /**
  * The enum class for the token type. This class is containing an unique

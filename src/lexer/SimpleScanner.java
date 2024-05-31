@@ -1,4 +1,4 @@
-package src.main.app;
+package src.lexer;
 
 // java import
 import java.util.List;
