@@ -1,7 +1,8 @@
 package src.main.app;
 
-import java.util.LinkedList;
+// java import
 import java.util.List;
+import java.util.LinkedList;
 
 /**
  * The class for the scanner. This class is scanning the given code.
