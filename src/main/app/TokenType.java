@@ -5,7 +5,7 @@ package src.main.app;
  * token.
  * 
  * @author                              o.le
- * @version                             1.4
+ * @version                             1.5
  * @since                               0.4
  */
 public enum TokenType {
@@ -16,6 +16,8 @@ public enum TokenType {
     // tokens for booolean expresion
     EQUAL, EQUAL_EQUAL, BANG, BANG_EQUAL, GREATER, GREATER_EQUAL, 
     LESS, LESS_EQUAL,
+
+    NUMBER,
 
     EOF;
 }

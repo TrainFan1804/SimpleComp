@@ -7,7 +7,7 @@ import java.util.List;
  * The class for the scanner. This class is scanning the given code.
  * 
  * @author                              o.le
- * @version                             0.42
+ * @version                             0.53
  * @since                               0.4
  */
 public class SimpleScanner {
@@ -61,32 +61,46 @@ public class SimpleScanner {
             case '*': this.addTokenToList(TokenType.MULT); break;
             case '/': this.addTokenToList(TokenType.DIVISION); break;
             case '=':
-                this.addTokenToList(this.checkForDoubleExpresion('=')
+                this.addTokenToList(this.checkForDoubleExpression('=')
                                         ? TokenType.EQUAL_EQUAL 
                                         : TokenType.EQUAL);
                 break;
             case '!': 
-                this.addTokenToList(this.checkForDoubleExpresion('=')
+                this.addTokenToList(this.checkForDoubleExpression('=')
                                         ? TokenType.BANG_EQUAL
                                         : TokenType.BANG);
                 break;
             case '>':
-                this.addTokenToList(this.checkForDoubleExpresion('=')
+                this.addTokenToList(this.checkForDoubleExpression('=')
                                         ? TokenType.GREATER_EQUAL 
                                         : TokenType.GREATER);
                 break;
             case '<':
-                this.addTokenToList(this.checkForDoubleExpresion('=')
+                this.addTokenToList(this.checkForDoubleExpression('=')
                                         ? TokenType.LESS_EQUAL 
                                         : TokenType.LESS);
                 break;
+            case '0':
+            case '1':
+            case '2':
+            case '3':
+            case '4':
+            case '5':
+            case '6':
+            case '7':
+            case '8':
+            case '9':
+                this.checkForMultipleExpression();
+                this.addTokenToList(TokenType.NUMBER);
+                break;
+            // ignore all different types of whitespaces
             case ' ':
             case '\r':
             case '\t':
                 break;
             default:
                 
-                System.err.println("Error");
+                System.err.println("Invalid character: " + currentChar);
                 break;
         }
     }
@@ -114,7 +128,7 @@ public class SimpleScanner {
      *                                  when the token has only one
      *                                  character.
      */
-    private boolean checkForDoubleExpresion(char expectedChar) {
+    private boolean checkForDoubleExpression(char expectedChar) {
 
         if (this.isAtEnd()) {
 
@@ -129,6 +143,20 @@ public class SimpleScanner {
         return true;
     }
 
+    private void checkForMultipleExpression() {
+
+        while (this.source.charAt(posCurrentChar) >= '0' 
+                && this.source.charAt(posCurrentChar) <= '9') {
+            
+            posCurrentChar++;
+
+            if (this.isAtEnd()) {
+                
+                return;
+            }
+        }
+    }
+
     /**
      * Check if the scanner has read the whole source.
      * 
@@ -138,6 +166,6 @@ public class SimpleScanner {
      */
     private boolean isAtEnd() {
 
-        return this.posCurrentChar == this.source.length();
+        return this.posCurrentChar >= this.source.length();
     }
 }
