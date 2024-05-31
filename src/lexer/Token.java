@@ -4,7 +4,7 @@ package src.lexer;
  * The class for the token. This class is containing an unique token.
  * 
  * @author                              o.le
- * @version                             1.22
+ * @version                             1.3
  * @since                               0.4
  */
 public class Token {

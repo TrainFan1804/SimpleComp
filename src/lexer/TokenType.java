@@ -5,7 +5,7 @@ package src.lexer;
  * token.
  * 
  * @author                              o.le
- * @version                             1.5
+ * @version                             1.6
  * @since                               0.4
  */
 public enum TokenType {
@@ -17,7 +17,7 @@ public enum TokenType {
     EQUAL, EQUAL_EQUAL, BANG, BANG_EQUAL, GREATER, GREATER_EQUAL, 
     LESS, LESS_EQUAL,
 
-    NUMBER,
+    LITERAL,
 
     EOF;
 }

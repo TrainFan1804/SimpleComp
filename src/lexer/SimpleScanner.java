@@ -8,7 +8,7 @@ import java.util.LinkedList;
  * The class for the scanner. This class is scanning the given code.
  * 
  * @author                              o.le
- * @version                             1.1
+ * @version                             1.2
  * @since                               0.4
  */
 public class SimpleScanner {
@@ -92,7 +92,7 @@ public class SimpleScanner {
             case '8':
             case '9':
                 this.checkForMultipleExpression();
-                this.addTokenToList(TokenType.NUMBER);
+                this.addTokenToList(TokenType.LITERAL);
                 break;
             // ignore all different types of whitespaces
             case ' ':
