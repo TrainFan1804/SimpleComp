@@ -10,7 +10,7 @@ import java.io.IOException;
  * The main class for the lexer. This is the that run the lexer. 
  * 
  * @author                              o.le
- * @version                             0.8
+ * @version                             0.9
  * @since                               0.1
  */
 public class SimpleLexer {
@@ -89,6 +89,6 @@ public class SimpleLexer {
      */
     private static void printErrorReport(String message) {
 
-        System.err.println(">> Error: " + message);
+        System.err.println(">> [Error] " + message);
     }
 }
