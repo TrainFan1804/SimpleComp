@@ -7,18 +7,13 @@ import java.io.BufferedReader;
 import java.io.IOException;
 
 /**
- * The main class for the lexer. This is the that run the lexer. 
+ * The main class for the lexer. This is the class that run the lexer.
  * 
  * @author                              o.le
  * @version                             0.9
  * @since                               0.1
  */
 public class SimpleLexer {
-    
-    public static void main(String[] args) throws IOException {
-
-        SimpleLexer.runTerminal();
-    }
 
     /**
      * Private constructor of the lexer because there is no need for a
@@ -29,7 +24,7 @@ public class SimpleLexer {
     /**
      * Read the user input from the terminal.
      */
-    private static void runTerminal() {
+    public static void runTerminal() {
         
 
         try (InputStreamReader input = new InputStreamReader(System.in);
