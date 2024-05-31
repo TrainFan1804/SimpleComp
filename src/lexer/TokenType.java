@@ -5,10 +5,13 @@ package src.lexer;
  * token.
  * 
  * @author                              o.le
- * @version                             1.6
+ * @version                             1.8
  * @since                               0.4
  */
 public enum TokenType {
+
+    // tokens for special character
+    LEFT_SQBRA, RIGHT_SQBRA, LEFT_BRAC, RIGHT_BRAC,
 
     // tokens for math
     PLUS, MINUS, MULT, DIVISION,
@@ -16,6 +19,9 @@ public enum TokenType {
     // tokens for booolean expresion
     EQUAL, EQUAL_EQUAL, BANG, BANG_EQUAL, GREATER, GREATER_EQUAL, 
     LESS, LESS_EQUAL,
+
+    // tokens for keywords
+    PRINT, IF, ELSE, FUNCTION, RETURN,
 
     LITERAL,
 
