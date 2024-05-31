@@ -7,7 +7,7 @@ import java.util.List;
  * The class for the scanner. This class is scanning the given code.
  * 
  * @author                              o.le
- * @version                             0.53
+ * @version                             0.54
  * @since                               0.4
  */
 public class SimpleScanner {
@@ -143,6 +143,12 @@ public class SimpleScanner {
         return true;
     }
 
+    /**
+     * When an integer value appears the lexer is checking if the
+     * following character are also integer. When the following
+     * character ARE integer the {@link SimpleScanner#posCurrentChar}
+     * is updating.
+     */
     private void checkForMultipleExpression() {
 
         while (this.source.charAt(posCurrentChar) >= '0' 

@@ -10,7 +10,7 @@ import java.io.BufferedReader;
  * The main class for the lexer. This is the that run the lexer. 
  * 
  * @author                              o.le
- * @version                             0.5
+ * @version                             0.51
  * @since                               0.1
  */
 public class SimpleLexer {
