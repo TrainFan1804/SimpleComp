@@ -9,9 +9,9 @@ import src.lexer.SimpleLexer;
 /**
  * The class run the interpreter.
  * 
- * @author                              o.le
- * @version                             0.20
- * @since                               0.1
+ * @author o.le
+ * @version 0.21
+ * @since 0.1
  */
 public class Main {
 
@@ -21,11 +21,10 @@ public class Main {
 
             SimpleLexer.runFile(new File(args[0]));
         } else {
-            
+
             SimpleLexer.runTerminal();
             // File f = new File("src/Test");
             // SimpleLexer.runFile(f);
         }
-
     }
 }
