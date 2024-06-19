@@ -2,6 +2,8 @@ package src.lexer;
 
 // java import
 import java.util.List;
+import java.io.File;
+import java.io.FileReader;
 import java.io.InputStreamReader;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -10,7 +12,7 @@ import java.io.IOException;
  * The main class for the lexer. This is the class that run the lexer.
  * 
  * @author                              o.le
- * @version                             1.0
+ * @version                             1.1
  * @since                               0.1
  */
 public class SimpleLexer {
@@ -21,22 +23,38 @@ public class SimpleLexer {
      */
     private SimpleLexer() {}
 
+    public static void runFile(File filePath) {
+
+        try (FileReader input = new FileReader(filePath);
+                BufferedReader reader = new BufferedReader(input)) {
+            
+            String line = "";
+            do {
+
+                line = reader.readLine();
+                SimpleLexer.run(line);
+            } while(!line.isEmpty());
+        } catch (IOException e) {
+
+            // TODO
+        }
+    }
+
     /**
      * Read the user input from the terminal.
      */
     public static void runTerminal() {
         
-
         try (InputStreamReader input = new InputStreamReader(System.in);
                 BufferedReader reader = new BufferedReader(input)){
                     
-            String line = " ";
-            while (line.length() != 0) {
-                        
+            String line = "";
+            do {
+
                 System.out.print(">> ");
                 line = reader.readLine();
                 SimpleLexer.run(line);
-            }
+            } while (!line.isEmpty());
         } catch (IOException e) {
 
             // TODO
