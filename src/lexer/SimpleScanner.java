@@ -8,7 +8,7 @@ import java.util.LinkedList;
  * The class for the scanner. This class is scanning the given code.
  * 
  * @author                              o.le
- * @version                             1.4
+ * @version                             1.5
  * @since                               0.4
  */
 public class SimpleScanner {
@@ -61,6 +61,7 @@ public class SimpleScanner {
             case ']': this.addTokenToList(TokenType.RIGHT_SQBRA); break;
             case '{': this.addTokenToList(TokenType.LEFT_BRAC); break;
             case '}': this.addTokenToList(TokenType.RIGHT_BRAC); break;
+            case ',': this.addTokenToList(TokenType.COMMA); break;
             case '+': this.addTokenToList(TokenType.PLUS); break;
             case '-': this.addTokenToList(TokenType.MINUS); break;
             case '*': this.addTokenToList(TokenType.MULT); break;

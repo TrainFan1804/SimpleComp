@@ -23,8 +23,6 @@ public class Main {
         } else {
 
             SimpleLexer.runTerminal();
-            // File f = new File("src/Test");
-            // SimpleLexer.runFile(f);
         }
     }
 }
