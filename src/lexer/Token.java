@@ -4,7 +4,7 @@ package src.lexer;
  * The class for the token. This class is containing an unique token.
  * 
  * @author                              o.le
- * @version                             1.3
+ * @version                             1.4
  * @since                               0.4
  */
 public class Token {
@@ -29,6 +29,6 @@ public class Token {
     @Override
     public String toString() {
 
-        return "lexeme: " + this.lexeme + ", type: " + this.type;
+        return "lexeme: " + this.lexeme + " type: " + this.type;
     }
 }

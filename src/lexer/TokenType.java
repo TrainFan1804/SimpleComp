@@ -5,7 +5,7 @@ package src.lexer;
  * token.
  * 
  * @author                              o.le
- * @version                             1.9
+ * @version                             1.11
  * @since                               0.4
  */
 public enum TokenType {
@@ -21,9 +21,10 @@ public enum TokenType {
     LESS, LESS_EQUAL,
 
     // tokens for keywords
-    PRINT, IF, ELSE, FUNCTION, RETURN,
+    VAR, PRINT, IF, ELSE, FUNCTION, RETURN,
 
-    LITERAL,
+    // tokens for variables and functions
+    IDENTIFIER, LITERAL,
 
     EOF;
 }

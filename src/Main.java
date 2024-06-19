@@ -4,14 +4,14 @@ package src;
 import java.io.File;
 import java.io.IOException;
 // custom import
-import src.lexer.SimpleLexer;
+import src.lexer.Lexer;
 
 /**
- * The class run the interpreter.
+ * This class run the interpreter.
  * 
- * @author o.le
- * @version 0.21
- * @since 0.1
+ * @author                              o.le
+ * @version                             0.34
+ * @since                               0.1
  */
 public class Main {
 
@@ -19,10 +19,10 @@ public class Main {
 
         if (args.length > 0) {
 
-            SimpleLexer.runFile(new File(args[0]));
+            Lexer.createLexer().runFile(new File(args[0]));
         } else {
 
-            SimpleLexer.runTerminal();
+            Lexer.createLexer().runTerminal();
         }
     }
 }
