@@ -26,5 +26,5 @@ public enum TokenType {
     // tokens for variables and functions
     IDENTIFIER, LITERAL,
 
-    EOF;
+    INVALID, EOF;
 }

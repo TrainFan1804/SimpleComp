@@ -9,15 +9,15 @@ import src.lexer.TokenType;
  * 
  * @author                              o.le
  * @version                             1.0
- * @since                               0.32
+ * @since                               0.35
  */
-public class Equal implements TokenAction {
+public class Less implements TokenAction {
 
     @Override
     public void action(LexerScanner scanner) {
         
         scanner.addTokenToList(scanner.checkNextChar('=') 
-                                ? TokenType.EQUAL_EQUAL
-                                : TokenType.EQUAL);
+                                ? TokenType.LESS_EQUAL
+                                : TokenType.LESS);
     }
 }

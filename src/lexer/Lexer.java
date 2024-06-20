@@ -10,22 +10,18 @@ import java.io.IOException;
 
 /**
  * The main class for the lexer. This is the class that run the lexer.
+ * <p>
+ * This class is designed as a <b>Singleton<b>.
  * 
  * @author                              o.le
- * @version                             1.8
+ * @version                             1.15
  * @since                               0.1
  */
 public class Lexer {
 
-    private static Lexer simpleLexer;
+    private static Lexer staticLexer;
 
-    /**
-     * Private constructor of the lexer because the lexer object is
-     * created by the method {@link Lexer#createLexer()}.
-     * <p>
-     * This class is designed as a <b>Singleton<b>.
-     */
-    private Lexer() {}
+    private LexerScanner lexerScanner;
 
     /**
      * Create an lexer object.
@@ -34,12 +30,20 @@ public class Lexer {
      */
     public static Lexer createLexer() {
 
-        if (simpleLexer == null) {
+        if (staticLexer == null) {
 
-            Lexer.simpleLexer = new Lexer();
+            Lexer.staticLexer = new Lexer();
         }
 
-        return Lexer.simpleLexer;
+        return Lexer.staticLexer;
+    }
+
+    /**
+     * Create a new lexer.
+     */
+    private Lexer() {
+
+        this.lexerScanner = LexerScanner.createLexerScanner();
     }
 
     /**
@@ -56,7 +60,7 @@ public class Lexer {
             do {
 
                 line = reader.readLine();
-                this.run(line);
+                this.run(new Source(line));
             } while(!line.isEmpty());
         } catch (IOException e) {
 
@@ -77,7 +81,7 @@ public class Lexer {
 
                 System.out.print(">> ");
                 line = reader.readLine();
-                this.run(line);
+                this.run(new Source(line));
             } while (!line.isEmpty());
         } catch (IOException e) {
 
@@ -92,14 +96,13 @@ public class Lexer {
      * Right now this method will just print the tokens to the
      * console!!!
      * 
-     * @param line                      The line that is currently
+     * @param source                    The source that is currently
      *                                  scanning.
      */
-    private void run(String line) {
+    private void run(Source source) {
 
-        Source source = new Source(line);
-        LexerScanner simpleScanner = new LexerScanner(source);
-        List<Token> l = simpleScanner.scanSource();
+        this.lexerScanner.initScanner(source);
+        List<Token> l = lexerScanner.scanSource();
         for (Token t : l) {
             
             System.out.println(t);
@@ -113,7 +116,7 @@ public class Lexer {
      * @param message                   The error message to
      *                                  handle the problem.
      */
-    static void error(String message) {
+    public static void error(String message) {
 
         Lexer.printErrorReport(message);
     }

@@ -1,10 +1,13 @@
 package src.lexer;
 
+// java import
+import java.util.function.Predicate;
+
 /**
  * This dataclass save the content that the lexer is reading. 
  * 
  * @author                              o.le
- * @version                             1.3
+ * @version                             1.8
  * @since                               0.27
  */
 public class Source {
@@ -47,42 +50,27 @@ public class Source {
      */
     boolean checkForDoubleExpression(char expectedChar) {
 
-        if (this.isAtEnd()) {
-
-            return false;
+        if (!this.isAtEnd() 
+                && this.source.charAt(this.posCurrentChar) 
+                    == expectedChar) {
+            
+            this.posCurrentChar++;
+            return true;
         }
-        if (this.source.charAt(this.posCurrentChar) != expectedChar) {
-
-            return false;
-        }
-
-        this.posCurrentChar++;
-        return true;
+        return false;
     }
 
     /**
-     * When an integer value appears the lexer is checking if the
-     * following character are also integer. 
-     * <p>
-     * When the following characters ARE integer the 
-     * {@link SimpleScanner#posCurrentChar} is updating.
+     * Check if the current character is an literal with multiple character.
+     * 
+     * @param condition                 The condition that is checked.
      */
-    void checkForMultipleExpression() {
+    void checkForMultipleExpression(Predicate<Character> condtions) {
 
-        if (this.isAtEnd()) {
-
-            return;
-        }
-
-        while (this.source.charAt(posCurrentChar) >= '0' 
-                && this.source.charAt(posCurrentChar) <= '9') {
+        while (!this.isAtEnd() 
+                && condtions.test(this.source.charAt(this.posCurrentChar))) {
             
             posCurrentChar++;
-
-            if (this.isAtEnd()) {
-                
-                return;
-            }
         }
     }
 

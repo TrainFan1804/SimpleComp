@@ -5,8 +5,10 @@ import java.util.List;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.function.Predicate;
 // custom import
 import src.lexer.tokens.TokenAction;
+import src.lexer.tokens.Var;
 import src.lexer.tokens.LeftSqtBracket;
 import src.lexer.tokens.Literal;
 import src.lexer.tokens.RightSqtBracket;
@@ -18,31 +20,46 @@ import src.lexer.tokens.Minus;
 import src.lexer.tokens.Multiplication;
 import src.lexer.tokens.Division;
 import src.lexer.tokens.Equal;
+import src.lexer.tokens.Bang;
+import src.lexer.tokens.Greater;
+import src.lexer.tokens.Less;
 
 /**
  * The class for the scanner. This class is scanning the given code.
+ * <p>
+ * This class is designed as a <b>Singleton<b>.
  * 
  * @author                              o.le
- * @version                             1.10
+ * @version                             1.21
  * @since                               0.4
  */
 public class LexerScanner {
 
-    private Source source;
+    private static LexerScanner staticLexerScanner;
 
+    private Source source;
     private List<Token> containedTokens;
     private Map<Character, TokenAction> tokensActions;
 
     /**
-     * Create a new simple scanner.
+     * Create an lexer scanner object.
      * 
-     * @param source                    The source the scanner is
-     *                                  scanning.
+     * @return                          The scanner object.
      */
-    public LexerScanner(Source source) {
+    public static LexerScanner createLexerScanner() {
 
-        this.source = source;
-        this.containedTokens = new LinkedList<>();
+        if (LexerScanner.staticLexerScanner == null) {
+
+            LexerScanner.staticLexerScanner = new LexerScanner();
+        }
+
+        return LexerScanner.staticLexerScanner;
+    }
+
+    /**
+     * Create a new lexer scanner.
+     */
+    private LexerScanner() {
 
         this.tokensActions = new HashMap<>();
         this.tokensActions.put('{', new LeftBracket());
@@ -55,17 +72,32 @@ public class LexerScanner {
         this.tokensActions.put('*', new Multiplication());
         this.tokensActions.put('/', new Division());
         this.tokensActions.put('=', new Equal());
+        this.tokensActions.put('!', new Bang());
+        this.tokensActions.put('>', new Greater());
+        this.tokensActions.put('<', new Less());
         for (char c = '0'; c <= '9'; c++) {
 
             this.tokensActions.put(c, new Literal());
         }
+        this.tokensActions.put('v', new Var());
     }
 
     /**
-     * The simple scanner is scanning through his saved source.
+     * Reset the scanner with a new source to scan.
      * 
-     * @return                          The list of all {@link Token}
-     *                                  that was in the source.
+     * @param source                    The new source to scan.
+     */
+    public void initScanner(Source source) {
+
+        this.source = source;
+        this.containedTokens = new LinkedList<>();
+    }
+
+    /**
+     * The scanner start his scan through the saved source.
+     * 
+     * @return                          All {@link Token} that was in
+     *                                  the source.
      */
     public List<Token> scanSource() {
 
@@ -80,7 +112,7 @@ public class LexerScanner {
     }
 
     /**
-     * Identify a token in the source.
+     * Start the identifing process of the current token in the source.
      */
     private void identifyToken() {
 
@@ -88,54 +120,20 @@ public class LexerScanner {
 
         TokenAction a = this.tokensActions.get(currentChar);
 
-        a.action(this);
+        if (a != null) {
 
-        // switch (currentChar) {
+            a.action(this);
+        } else {
             
-        //     case '!': 
-        //         this.addTokenToList(this.checkForDoubleExpression('=')
-        //                                 ? TokenType.BANG_EQUAL
-        //                                 : TokenType.BANG);
-        //         break;
-        //     case '>':
-        //         this.addTokenToList(this.checkForDoubleExpression('=')
-        //                                 ? TokenType.GREATER_EQUAL 
-        //                                 : TokenType.GREATER);
-        //         break;
-        //     case '<':
-        //         this.addTokenToList(this.checkForDoubleExpression('=')
-        //                                 ? TokenType.LESS_EQUAL 
-        //                                 : TokenType.LESS);
-        //         break;
-        //     case '0':
-        //     case '1':
-        //     case '2':
-        //     case '3':
-        //     case '4':
-        //     case '5':
-        //     case '6':
-        //     case '7':
-        //     case '8':
-        //     case '9':
-        //         this.checkForMultipleExpression();
-        //         this.addTokenToList(TokenType.LITERAL);
-        //         break;
-        //     // ignore all different types of whitespaces
-        //     case ' ':
-        //     case '\r':
-        //     case '\t':
-        //         break;
-        //     default:
-                
-        //         SimpleLexer.error("Invalid character: " + currentChar);
-        //         break;
-        // }
+            Lexer.error("Invalid character: " + currentChar);
+        }
     }
 
     /**
-     * Add a token to the list that save all {@link Token}.
+     * Add a token to the token list from the source.
      * 
-     * @param lexeme                    The lexeme of the new token.
+     * @param lexeme                    The lexeme / type of the new 
+     *                                  token.
      */
     public void addTokenToList(TokenType lexeme) {
 
@@ -154,20 +152,23 @@ public class LexerScanner {
      *                                  when the token has only one
      *                                  character.
      */
-    public boolean checkForDoubleExpression(char expectedChar) {
+    public boolean checkNextChar(char expectedChar) {
 
         return this.source.checkForDoubleExpression(expectedChar);
     }
 
     /**
-     * When an integer value appears the lexer is checking if the
-     * following character are also integer. 
-     * <p>
-     * When the following characters ARE integer the 
-     * {@link SimpleScanner#posCurrentChar} is updating.
+     * Check if the current character is an literal with multiple character.
+     * 
+     * @param condition                 The condition that is checked.
      */
-    public void checkForMultipleExpression() {
+    public void checkForMultipleExpression(Predicate<Character> condition) {
 
-        this.source.checkForMultipleExpression();
+        this.source.checkForMultipleExpression(condition);
+    }
+
+    public String getCurrentLexeme() {
+
+        return this.source.getLexeme();
     }
 }

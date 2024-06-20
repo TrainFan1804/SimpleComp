@@ -10,7 +10,7 @@ import src.lexer.Lexer;
  * This class run the interpreter.
  * 
  * @author                              o.le
- * @version                             0.34
+ * @version                             0.42
  * @since                               0.1
  */
 public class Main {
