@@ -1,6 +1,7 @@
 package src.lexer;
 
 // java import
+import java.util.Stack;
 import java.util.List;
 import java.util.LinkedList;
 import java.util.Map;
@@ -30,7 +31,7 @@ import src.lexer.tokens.Less;
  * This class is designed as a <b>Singleton<b>.
  * 
  * @author                              o.le
- * @version                             1.21
+ * @version                             1.25
  * @since                               0.4
  */
 public class LexerScanner {
@@ -38,6 +39,7 @@ public class LexerScanner {
     private static LexerScanner staticLexerScanner;
 
     private Source source;
+    private Stack<TokenType> bracList;
     private List<Token> containedTokens;
     private Map<Character, TokenAction> tokensActions;
 
@@ -91,6 +93,7 @@ public class LexerScanner {
 
         this.source = source;
         this.containedTokens = new LinkedList<>();
+        this.bracList = new Stack<>();
     }
 
     /**
@@ -167,8 +170,29 @@ public class LexerScanner {
         this.source.checkForMultipleExpression(condition);
     }
 
+    /**
+     * Get the lexeme that is currently scanning.
+     * 
+     * @return                          The string representation of
+     *                                  the lexeme.
+     */
     public String getCurrentLexeme() {
 
         return this.source.getLexeme();
+    }
+
+    public void pushBracketToStack(TokenType type) {
+
+        this.bracList.push(type);
+    }
+
+    public TokenType checkBracketStack() {
+
+        if (!this.bracList.isEmpty()) {
+
+            return this.bracList.pop();
+        }
+
+        return null;
     }
 }

@@ -8,7 +8,7 @@ import src.lexer.TokenType;
  * This class represent an specific token.
  * 
  * @author                              o.le
- * @version                             1.0
+ * @version                             1.1
  * @since                               0.32
  */
 public class LeftSqtBracket implements TokenAction {
@@ -17,5 +17,6 @@ public class LeftSqtBracket implements TokenAction {
     public void action(LexerScanner scanner) {
         
         scanner.addTokenToList(TokenType.LEFT_SQBRA);
+        scanner.pushBracketToStack(TokenType.LEFT_SQBRA);
     }
 }

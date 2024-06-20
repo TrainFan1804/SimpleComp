@@ -1,9 +1,9 @@
 package src.lexer.tokens;
 
 // custom import
-import src.lexer.Lexer;
 import src.lexer.LexerScanner;
 import src.lexer.TokenType;
+import src.lexer.Lexer;
 
 /**
  * This class represent an specific token.

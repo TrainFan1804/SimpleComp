@@ -7,7 +7,7 @@ import java.util.function.Predicate;
  * This dataclass save the content that the lexer is reading. 
  * 
  * @author                              o.le
- * @version                             1.8
+ * @version                             1.10
  * @since                               0.27
  */
 public class Source {
@@ -21,16 +21,30 @@ public class Source {
         this.source = source;
     }
 
+    /**
+     * Start the scanning of an new lexeme.
+     */
     public void startLexeme() {
 
         this.posStartOfLexeme = this.posCurrentChar;
     }
 
+    /**
+     * Get the next char of the source pointer.
+     * 
+     * @return                          The next char.
+     */
     public char getNextChar() {
 
         return this.source.charAt(this.posCurrentChar++);
     }
 
+    /**
+     * Get the lexeme that is currently scanning.
+     * 
+     * @return                          The string representation of
+     *                                  the lexeme.
+     */
     public String getLexeme() {
 
         return this.source.substring(this.posStartOfLexeme,

@@ -103,9 +103,13 @@ public class Lexer {
 
         this.lexerScanner.initScanner(source);
         List<Token> l = lexerScanner.scanSource();
-        for (Token t : l) {
-            
-            System.out.println(t);
+
+        if (l.size() > 1) {
+
+            for (Token t : l) {
+                
+                System.out.println(t);
+            }
         }
     }
 
