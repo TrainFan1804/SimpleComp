@@ -7,7 +7,7 @@ import java.util.Stack;
  * This class save the amount of brackets in the source.
  * 
  * @author                              o.le
- * @version                             0.1
+ * @version                             0.2
  * @since                               0.45
  */
 public class BracketSource {
@@ -35,5 +35,4 @@ public class BracketSource {
 
         return null;
     }
-
 }
