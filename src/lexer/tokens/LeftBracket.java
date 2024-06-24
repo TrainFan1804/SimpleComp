@@ -16,7 +16,7 @@ public class LeftBracket implements TokenAction {
     @Override
     public void action(LexerScanner scanner) {
         
+        scanner.pushLeftBracketToStack(TokenType.LEFT_BRAC);
         scanner.addTokenToList(TokenType.LEFT_BRAC);
-        scanner.pushBracketToStack(TokenType.LEFT_BRAC);
     }
 }

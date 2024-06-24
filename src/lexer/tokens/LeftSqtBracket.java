@@ -17,6 +17,6 @@ public class LeftSqtBracket implements TokenAction {
     public void action(LexerScanner scanner) {
         
         scanner.addTokenToList(TokenType.LEFT_SQBRA);
-        scanner.pushBracketToStack(TokenType.LEFT_SQBRA);
+        scanner.pushLeftBracketToStack(TokenType.LEFT_SQBRA);
     }
 }

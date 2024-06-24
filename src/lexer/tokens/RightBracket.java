@@ -17,12 +17,12 @@ public class RightBracket implements TokenAction {
     @Override
     public void action(LexerScanner scanner) {
         
-        if (scanner.checkBracketStack() == TokenType.LEFT_BRAC) {
+        if (scanner.checkLeftBracketStack() == TokenType.LEFT_BRAC) {
 
             scanner.addTokenToList(TokenType.RIGHT_BRAC);
         } else {
 
-            Lexer.error("Missing closing bracket!");
+            Lexer.error("Missing opening '{' bracket!");
         }
     }
 }

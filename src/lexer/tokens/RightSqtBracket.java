@@ -17,12 +17,12 @@ public class RightSqtBracket implements TokenAction {
     @Override
     public void action(LexerScanner scanner) {
         
-        if (scanner.checkBracketStack() == TokenType.LEFT_SQBRA) {
+        if (scanner.checkLeftBracketStack() == TokenType.LEFT_SQBRA) {
 
             scanner.addTokenToList(TokenType.RIGHT_SQBRA);
         } else {
 
-            Lexer.error("Missing closing bracket!");
+            Lexer.error("Missing opening '[' bracket!");
         }
     }
 }

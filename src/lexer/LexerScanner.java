@@ -39,7 +39,8 @@ public class LexerScanner {
     private static LexerScanner staticLexerScanner;
 
     private Source source;
-    private Stack<TokenType> bracList;
+    private BracketSource bracketSource;
+
     private List<Token> containedTokens;
     private Map<Character, TokenAction> tokensActions;
 
@@ -93,7 +94,7 @@ public class LexerScanner {
 
         this.source = source;
         this.containedTokens = new LinkedList<>();
-        this.bracList = new Stack<>();
+        this.bracketSource = new BracketSource();
     }
 
     /**
@@ -108,6 +109,11 @@ public class LexerScanner {
 
             this.source.startLexeme();
             this.identifyToken();
+        }
+
+        if (this.checkLeftBracketStack() != null) {
+
+            Lexer.error("There are to many open brackets!");
         }
 
         this.containedTokens.add(new Token("", TokenType.EOF));
@@ -181,18 +187,27 @@ public class LexerScanner {
         return this.source.getLexeme();
     }
 
-    public void pushBracketToStack(TokenType type) {
+    public void pushLeftBracketToStack(TokenType type) {
 
-        this.bracList.push(type);
+        this.bracketSource.addBracket(this.bracketSource
+                                        .leftBracList, type);
     }
 
-    public TokenType checkBracketStack() {
+    public TokenType checkLeftBracketStack() {
 
-        if (!this.bracList.isEmpty()) {
+        return this.bracketSource.checkBracketStack(this.bracketSource
+                                                    .leftBracList);
+    }
 
-            return this.bracList.pop();
-        }
+    public void pushRightBracketToStacks(TokenType type) {
 
-        return null;
+        this.bracketSource.addBracket(this.bracketSource
+                                        .rightBracList, type);
+    }
+
+    public TokenType checkRightBracketStack() {
+
+        return this.bracketSource.checkBracketStack(this.bracketSource
+                                                        .rightBracList);
     }
 }
