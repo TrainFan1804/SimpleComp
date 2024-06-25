@@ -7,7 +7,7 @@ import java.util.function.Predicate;
  * This dataclass save the content that the lexer is reading. 
  * 
  * @author                              o.le
- * @version                             1.11
+ * @version                             1.13
  * @since                               0.27
  */
 public class Source {
@@ -19,6 +19,7 @@ public class Source {
     Source(String source) {
         
         this.source = source;
+        this.posCurrentChar = 0;
     }
 
     /**
@@ -37,6 +38,14 @@ public class Source {
     public char getNextChar() {
 
         return this.source.charAt(this.posCurrentChar++);
+    }
+
+    /**
+     * Set the char pointer of the source one position back.
+     */
+    public void setCharBack() {
+
+        this.posCurrentChar--;
     }
 
     /**

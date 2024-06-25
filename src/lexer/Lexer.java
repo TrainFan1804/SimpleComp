@@ -14,14 +14,14 @@ import java.io.IOException;
  * This class is designed as a <b>Singleton<b>.
  * 
  * @author                              o.le
- * @version                             1.17
+ * @version                             1.18
  * @since                               0.1
  */
 public class Lexer {
 
     private static Lexer staticLexer;
 
-    private LexerScanner lexerScanner;
+    private LexerScannerTwo lexerScanner;
 
     /**
      * Create an lexer object.
@@ -43,7 +43,7 @@ public class Lexer {
      */
     private Lexer() {
 
-        this.lexerScanner = LexerScanner.createLexerScanner();
+        this.lexerScanner = LexerScannerTwo.createLexerScanner();
     }
 
     /**
@@ -60,7 +60,6 @@ public class Lexer {
             do {
                 
                 line = reader.readLine();
-                line = line.replaceAll("\\s+","");
                 this.run(new Source(line));
             } while(!line.isEmpty());
         } catch (IOException e) {
@@ -82,7 +81,6 @@ public class Lexer {
                 
                 System.out.print(">> ");
                 line = reader.readLine();
-                line = line.replaceAll("\\s+","");
                 this.run(new Source(line));
             } while (!line.isEmpty());
         } catch (IOException e) {
