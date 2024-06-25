@@ -7,10 +7,10 @@ import java.util.Stack;
  * This class save the amount of brackets in the source.
  * 
  * @author                              o.le
- * @version                             0.2
+ * @version                             0.3
  * @since                               0.45
  */
-public class BracketSource {
+class BracketSource {
 
     Stack<TokenType> leftBracList;
     Stack<TokenType> rightBracList;
@@ -21,12 +21,12 @@ public class BracketSource {
         this.rightBracList = new Stack<>();
      }
 
-    public void addBracket(Stack<TokenType> stack, TokenType bracketType) {
+    void addBracket(Stack<TokenType> stack, TokenType bracketType) {
 
         stack.push(bracketType);
     }
 
-    public TokenType checkBracketStack(Stack<TokenType> stack) {
+    TokenType checkBracketStack(Stack<TokenType> stack) {
 
         if (!stack.isEmpty()) {
 

@@ -1,7 +1,6 @@
 package src.lexer;
 
 // java import
-import java.util.Stack;
 import java.util.List;
 import java.util.LinkedList;
 import java.util.Map;
@@ -10,6 +9,7 @@ import java.util.function.Predicate;
 // custom import
 import src.lexer.tokens.TokenAction;
 import src.lexer.tokens.Var;
+import src.lexer.tokens.Whitespace;
 import src.lexer.tokens.LeftSqtBracket;
 import src.lexer.tokens.Literal;
 import src.lexer.tokens.RightSqtBracket;
@@ -31,7 +31,7 @@ import src.lexer.tokens.Less;
  * This class is designed as a <b>Singleton<b>.
  * 
  * @author                              o.le
- * @version                             1.25
+ * @version                             1.26
  * @since                               0.4
  */
 public class LexerScanner {
@@ -83,6 +83,10 @@ public class LexerScanner {
             this.tokensActions.put(c, new Literal());
         }
         this.tokensActions.put('v', new Var());
+        // ignore whitespace
+        this.tokensActions.put(' ', new Whitespace());
+        this.tokensActions.put('\t', new Whitespace());
+        this.tokensActions.put('\n', new Whitespace());
     }
 
     /**
