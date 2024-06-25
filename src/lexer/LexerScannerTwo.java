@@ -1,7 +1,8 @@
 package src.lexer;
 
-import java.util.LinkedList;
+// java import
 import java.util.List;
+import java.util.LinkedList;
 
 public class LexerScannerTwo {
 
@@ -165,7 +166,6 @@ public class LexerScannerTwo {
                                                         || c >= 'a' && c <= 'z');
                 this.addTokenToList(TokenType.IDENTIFIER);
                 break;
-
             default:
                 Lexer.error("Invalid character: " + currentChar);
         }
