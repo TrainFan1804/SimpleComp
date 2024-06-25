@@ -71,6 +71,7 @@ public class Source {
             this.posCurrentChar++;
             return true;
         }
+        
         return false;
     }
 
