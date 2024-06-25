@@ -14,7 +14,7 @@ import java.io.IOException;
  * This class is designed as a <b>Singleton<b>.
  * 
  * @author                              o.le
- * @version                             1.15
+ * @version                             1.17
  * @since                               0.1
  */
 public class Lexer {
@@ -58,13 +58,14 @@ public class Lexer {
             
             String line = "";
             do {
-
+                
                 line = reader.readLine();
+                line = line.replaceAll("\\s+","");
                 this.run(new Source(line));
             } while(!line.isEmpty());
         } catch (IOException e) {
 
-            // TODO
+            e.printStackTrace();
         }
     }
 
@@ -74,18 +75,19 @@ public class Lexer {
     public void runTerminal() {
         
         try (InputStreamReader input = new InputStreamReader(System.in);
-                BufferedReader reader = new BufferedReader(input)){
+                BufferedReader reader = new BufferedReader(input)) {
                     
             String line = "";
             do {
-
+                
                 System.out.print(">> ");
                 line = reader.readLine();
+                line = line.replaceAll("\\s+","");
                 this.run(new Source(line));
             } while (!line.isEmpty());
         } catch (IOException e) {
 
-            // TODO
+            e.printStackTrace();
         }
     }
 

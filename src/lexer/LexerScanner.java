@@ -83,10 +83,6 @@ public class LexerScanner {
             this.tokensActions.put(c, new Literal());
         }
         this.tokensActions.put('v', new Var());
-        // ignore whitespace
-        this.tokensActions.put(' ', new Whitespace());
-        this.tokensActions.put('\t', new Whitespace());
-        this.tokensActions.put('\n', new Whitespace());
     }
 
     /**

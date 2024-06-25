@@ -7,7 +7,7 @@ import java.util.function.Predicate;
  * This dataclass save the content that the lexer is reading. 
  * 
  * @author                              o.le
- * @version                             1.10
+ * @version                             1.11
  * @since                               0.27
  */
 public class Source {
