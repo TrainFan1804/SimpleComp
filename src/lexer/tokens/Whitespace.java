@@ -10,6 +10,7 @@ import src.lexer.LexerScanner;
  * @version                             1.0
  * @since                               0.45
  */
+@Deprecated
 public class Whitespace implements TokenAction {
 
     @Override

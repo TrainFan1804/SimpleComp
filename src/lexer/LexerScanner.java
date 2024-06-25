@@ -9,7 +9,6 @@ import java.util.function.Predicate;
 // custom import
 import src.lexer.tokens.TokenAction;
 import src.lexer.tokens.Var;
-import src.lexer.tokens.Whitespace;
 import src.lexer.tokens.LeftSqtBracket;
 import src.lexer.tokens.Literal;
 import src.lexer.tokens.RightSqtBracket;
