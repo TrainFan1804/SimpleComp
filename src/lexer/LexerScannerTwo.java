@@ -4,6 +4,15 @@ package src.lexer;
 import java.util.List;
 import java.util.LinkedList;
 
+/**
+ * The main class for the lexer. This is the class that run the lexer.
+ * <p>
+ * This class is designed as a <b>Singleton<b>.
+ * 
+ * @author                              o.le
+ * @version                             1.20
+ * @since                               0.1
+ */
 public class LexerScannerTwo {
 
     private static LexerScannerTwo staticLexerScanner;
@@ -88,6 +97,9 @@ public class LexerScannerTwo {
             case '*': this.addTokenToList(TokenType.MULT); break;
             case '/': this.addTokenToList(TokenType.DIVISION); break;
             case ',': this.addTokenToList(TokenType.COMMA); break;
+            // ignore whitspace
+            case ' ': case '\t':
+            case '\f': case '\r': break;
 
             // medium scan
             case '=': 
