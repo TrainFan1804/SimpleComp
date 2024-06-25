@@ -7,7 +7,7 @@ import java.util.function.Predicate;
  * This dataclass save the content that the lexer is reading. 
  * 
  * @author                              o.le
- * @version                             1.13
+ * @version                             1.14
  * @since                               0.27
  */
 public class Source {
@@ -31,13 +31,25 @@ public class Source {
     }
 
     /**
+     * Get the char of the source pointer.
+     * 
+     * @return                          The char.
+     */
+    public char getCurrentChar() {
+
+        return this.source.charAt(posCurrentChar-1);
+    }
+
+    /**
      * Get the next char of the source pointer.
      * 
      * @return                          The next char.
      */
     public char getNextChar() {
 
-        return this.source.charAt(this.posCurrentChar++);
+        if (!this.isAtEnd()) return this.source.charAt(this.posCurrentChar++);
+        
+        return ' ';
     }
 
     /**
@@ -96,6 +108,28 @@ public class Source {
             
             posCurrentChar++;
         }
+    }
+
+    boolean checkKeyWord(int start, int length, String expected) {
+
+        int backUp = this.posCurrentChar;
+
+        if (!this.isAtEnd()) {
+
+            for (int i = start - 1; i < length; i++) {
+    
+                if (this.getCurrentChar() != expected.charAt(i)) {
+    
+                    this.posCurrentChar = backUp;
+                    return false;
+                }
+    
+                this.posCurrentChar++;
+            }
+        }
+
+        this.posCurrentChar = backUp;
+        return true;
     }
 
     /**

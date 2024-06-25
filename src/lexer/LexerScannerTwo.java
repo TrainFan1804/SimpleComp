@@ -10,7 +10,7 @@ import java.util.LinkedList;
  * This class is designed as a <b>Singleton<b>.
  * 
  * @author                              o.le
- * @version                             1.20
+ * @version                             1.21
  * @since                               0.1
  */
 public class LexerScannerTwo {
@@ -174,9 +174,10 @@ public class LexerScannerTwo {
             case 'x': case 'X':
             case 'y': case 'Y':
             case 'z': case 'Z':
-                this.source.checkForMultipleExpression(c -> c >= 'A' && c <= 'Z' 
-                                                        || c >= 'a' && c <= 'z');
-                this.addTokenToList(TokenType.IDENTIFIER);
+                this.checkForIdentifierOrKeyword();
+                // this.source.checkForMultipleExpression(c -> c >= 'A' && c <= 'Z' 
+                //                                         || c >= 'a' && c <= 'z');
+                // this.addTokenToList(TokenType.IDENTIFIER);
                 break;
             default:
                 Lexer.error("Invalid character: " + currentChar);
@@ -185,6 +186,65 @@ public class LexerScannerTwo {
 
     private void checkForIdentifierOrKeyword() {
 
-        Character.isJavaIdentifierPart('d');
+        switch (this.source.getCurrentChar()) {
+            case 'v':
+                // check for "var"
+                // very bad
+                if (this.source.getNextChar() == 'a') {
+
+                    if (this.source.getNextChar() == 'r') {
+
+                        this.addTokenToList(TokenType.VAR);
+                    }
+                }
+                break;
+            case 'p':
+                // check for "print"
+                break;
+            case 'i':
+                // check for "if"
+                if (this.source.getNextChar() == 'f') {
+
+                    this.addTokenToList(TokenType.IF);
+                }
+                break;
+            case 'e':
+                // check for "else"
+                if (this.source.getNextChar() == 'l') {
+
+                    if (this.source.getNextChar() == 's') {
+
+                        if (this.source.getNextChar() == 'e') {
+
+                            this.addTokenToList(TokenType.ELSE);
+                        }
+                    }
+                }
+                break;
+            case 'd':
+                // check for "def"
+                if (this.source.getNextChar() == 'e') {
+
+                    if (this.source.getNextChar() == 'f') {
+
+                        this.addTokenToList(TokenType.FUNCTION);
+                    }
+                }
+                break;
+            case 'r':
+                // check for "return"
+                if (this.source.getNextChar() == 'e') {
+
+                    if (this.source.getNextChar() == 't') {
+
+                        if (this.source.getNextChar() == 'u') {
+
+                            this.addTokenToList(TokenType.ELSE);
+                        }
+                    }
+                }
+            default:
+                break;
+        }
     }
 }
