@@ -244,6 +244,7 @@ public class LexerScannerTwo {
                     }
                 }
             default:
+                this.addTokenToList(TokenType.IDENTIFIER);
                 break;
         }
     }
