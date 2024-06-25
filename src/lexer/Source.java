@@ -7,7 +7,7 @@ import java.util.function.Predicate;
  * This dataclass save the content that the lexer is reading. 
  * 
  * @author                              o.le
- * @version                             1.14
+ * @version                             1.15
  * @since                               0.27
  */
 public class Source {
@@ -110,6 +110,7 @@ public class Source {
         }
     }
 
+    @Deprecated
     boolean checkKeyWord(int start, int length, String expected) {
 
         int backUp = this.posCurrentChar;
