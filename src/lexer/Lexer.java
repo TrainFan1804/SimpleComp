@@ -14,7 +14,7 @@ import java.io.IOException;
  * This class is designed as a <b>Singleton<b>.
  * 
  * @author                              o.le
- * @version                             1.18
+ * @version                             1.19
  * @since                               0.1
  */
 public class Lexer {
@@ -103,6 +103,7 @@ public class Lexer {
 
         this.lexerScanner.initScanner(source);
         List<Token> l = lexerScanner.scanSource();
+        ScannedTokens.addToList(l);
 
         if (l.size() > 1) {
 
