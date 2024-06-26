@@ -10,7 +10,7 @@ import java.util.LinkedList;
  * This class is designed as a <b>Singleton<b>.
  * 
  * @author                              o.le
- * @version                             1.24
+ * @version                             1.25
  * @since                               0.1
  */
 public class LexerScannerTwo {
@@ -184,10 +184,10 @@ public class LexerScannerTwo {
     private void checkForIdentifierOrKeyword() {
 
         this.source.saveCurrentChar();
+        // very bad
         switch (this.source.getCurrentChar()) {
             case 'v':
                 // check for "var"
-                // very bad
                 if (this.source.getNextChar() == 'a') {
 
                     if (this.source.getNextChar() == 'r') {
@@ -198,7 +198,20 @@ public class LexerScannerTwo {
                 }
             case 'p':
                 // check for "print"
-                break;
+                if (this.source.getNextChar() == 'r') {
+
+                    if (this.source.getNextChar() == 'i') {
+
+                        if (this.source.getNextChar() == 'n') {
+
+                            if (this.source.getNextChar() == 't') {
+
+                                this.addTokenToList(TokenType.PRINT);
+                                return;
+                            }
+                        }
+                    }
+                }
             case 'i':
                 // check for "if"
                 if (this.source.getNextChar() == 'f') {
@@ -237,8 +250,11 @@ public class LexerScannerTwo {
 
                         if (this.source.getNextChar() == 'u') {
 
-                            this.addTokenToList(TokenType.ELSE);
-                            return;
+                            if (this.source.getNextChar() == 'n') {
+
+                                this.addTokenToList(TokenType.RETURN);
+                                return;
+                            }
                         }
                     }
                 }
