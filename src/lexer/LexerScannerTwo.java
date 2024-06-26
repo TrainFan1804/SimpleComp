@@ -175,9 +175,6 @@ public class LexerScannerTwo {
             case 'y': case 'Y':
             case 'z': case 'Z':
                 this.checkForIdentifierOrKeyword();
-                // this.source.checkForMultipleExpression(c -> c >= 'A' && c <= 'Z' 
-                //                                         || c >= 'a' && c <= 'z');
-                // this.addTokenToList(TokenType.IDENTIFIER);
                 break;
             default:
                 Lexer.error("Invalid character: " + currentChar);
@@ -195,9 +192,9 @@ public class LexerScannerTwo {
                     if (this.source.getNextChar() == 'r') {
 
                         this.addTokenToList(TokenType.VAR);
+                        return;
                     }
                 }
-                break;
             case 'p':
                 // check for "print"
                 break;
@@ -206,8 +203,8 @@ public class LexerScannerTwo {
                 if (this.source.getNextChar() == 'f') {
 
                     this.addTokenToList(TokenType.IF);
+                    return;
                 }
-                break;
             case 'e':
                 // check for "else"
                 if (this.source.getNextChar() == 'l') {
@@ -217,10 +214,10 @@ public class LexerScannerTwo {
                         if (this.source.getNextChar() == 'e') {
 
                             this.addTokenToList(TokenType.ELSE);
+                            return;
                         }
                     }
                 }
-                break;
             case 'd':
                 // check for "def"
                 if (this.source.getNextChar() == 'e') {
@@ -228,9 +225,9 @@ public class LexerScannerTwo {
                     if (this.source.getNextChar() == 'f') {
 
                         this.addTokenToList(TokenType.FUNCTION);
+                        return;
                     }
                 }
-                break;
             case 'r':
                 // check for "return"
                 if (this.source.getNextChar() == 'e') {
@@ -240,12 +237,21 @@ public class LexerScannerTwo {
                         if (this.source.getNextChar() == 'u') {
 
                             this.addTokenToList(TokenType.ELSE);
+                            return;
                         }
                     }
                 }
-            default:
-                this.addTokenToList(TokenType.IDENTIFIER);
-                break;
+            // default:
+            //     // non keyword are not recognize yet
+            //     this.addTokenToList(TokenType.IDENTIFIER);
+            //     break;
+            
+            // here reset the pointer to the start position of the lexeme 
+            // because the current lexeme is no keyword
         }
+
+        this.source.checkForMultipleExpression(c -> c >= 'A' && c <= 'Z' 
+                                                || c >= 'a' && c <= 'z');
+        this.addTokenToList(TokenType.IDENTIFIER);
     }
 }
