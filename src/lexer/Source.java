@@ -7,13 +7,14 @@ import java.util.function.Predicate;
  * This dataclass save the content that the lexer is reading. 
  * 
  * @author                              o.le
- * @version                             1.15
+ * @version                             1.17
  * @since                               0.27
  */
 public class Source {
 
     private String source;
     private int posCurrentChar;
+    private int backUpCurrentChar;
     private int posStartOfLexeme;
 
     Source(String source) {
@@ -38,6 +39,24 @@ public class Source {
     public char getCurrentChar() {
 
         return this.source.charAt(posCurrentChar-1);
+    }
+
+    /**
+     * Save the current postion of the pointer.
+     */
+    public void saveCurrentChar() {
+
+        this.backUpCurrentChar = this.posCurrentChar;
+    }
+
+    /**
+     * Reset the pointer of the source. This method must be called after the
+     * method {@link Source#saveCurrentChar()}.
+     */
+    public void resetCurrentChar() {
+
+        this.posCurrentChar = this.backUpCurrentChar;
+        this.backUpCurrentChar = 0;
     }
 
     /**

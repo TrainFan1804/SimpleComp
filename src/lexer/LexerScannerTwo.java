@@ -10,7 +10,7 @@ import java.util.LinkedList;
  * This class is designed as a <b>Singleton<b>.
  * 
  * @author                              o.le
- * @version                             1.21
+ * @version                             1.24
  * @since                               0.1
  */
 public class LexerScannerTwo {
@@ -183,6 +183,7 @@ public class LexerScannerTwo {
 
     private void checkForIdentifierOrKeyword() {
 
+        this.source.saveCurrentChar();
         switch (this.source.getCurrentChar()) {
             case 'v':
                 // check for "var"
@@ -248,6 +249,7 @@ public class LexerScannerTwo {
             
             // here reset the pointer to the start position of the lexeme 
             // because the current lexeme is no keyword
+            this.source.resetCurrentChar();
         }
 
         this.source.checkForMultipleExpression(c -> c >= 'A' && c <= 'Z' 
