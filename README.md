@@ -1,7 +1,7 @@
 # Simple Lexer
 This is an simple lexer writen in java.
 
-# What language can the lexer analyze?
+# What language can the lexer analyse?
 
 ```
 func functionName[argumentOne, argumentTwo, ...] {

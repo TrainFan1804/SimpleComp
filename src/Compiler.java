@@ -1,7 +1,8 @@
 package src;
 
+// java import
 import java.io.File;
-
+// custom import
 import src.lexer.Lexer;
 import src.parser.Parser;
 
