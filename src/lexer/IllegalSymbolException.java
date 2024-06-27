@@ -2,7 +2,7 @@ package src.lexer;
 
 /**
  * The class represent an exception that is thrown when the 
- * {@link LexerScanner} found an illegal character.
+ * {@link LexerScannerOld} found an illegal character.
  * 
  * @author                              o.le
  * @version                             1.1

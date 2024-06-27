@@ -1,7 +1,7 @@
 package src.lexer.tokens;
 
 // custom import
-import src.lexer.LexerScanner;
+import src.lexer.LexerScannerOld;
 
 /**
  * This class represent an specific token.
@@ -14,5 +14,5 @@ import src.lexer.LexerScanner;
 public class Whitespace implements TokenAction {
 
     @Override
-    public void action(LexerScanner scanner) { }
+    public void action(LexerScannerOld scanner) { }
 }

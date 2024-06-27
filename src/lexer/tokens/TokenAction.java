@@ -1,11 +1,11 @@
 package src.lexer.tokens;
 
 // custom import
-import src.lexer.LexerScanner;
+import src.lexer.LexerScannerOld;
 
 /**
  * The interface provide the functionality to start an action when
- * an specific token was scanned by the {@link LexerScanner}.
+ * an specific token was scanned by the {@link LexerScannerOld}.
  * 
  * @author                              o.le
  * @version                             1.0
@@ -13,5 +13,5 @@ import src.lexer.LexerScanner;
  */
 public interface TokenAction {
 
-    void action(LexerScanner scanner);
+    void action(LexerScannerOld scanner);
 }

@@ -1,7 +1,7 @@
 package src.lexer.tokens;
 
 // custom import
-import src.lexer.LexerScanner;
+import src.lexer.LexerScannerOld;
 import src.lexer.TokenType;
 import src.lexer.Lexer;
 
@@ -15,7 +15,7 @@ import src.lexer.Lexer;
 public class RightBracket implements TokenAction {
 
     @Override
-    public void action(LexerScanner scanner) {
+    public void action(LexerScannerOld scanner) {
         
         if (scanner.checkLeftBracketStack() == TokenType.LEFT_BRAC) {
 

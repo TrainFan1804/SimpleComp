@@ -21,7 +21,7 @@ public class Lexer {
 
     private static Lexer staticLexer;
 
-    private LexerScannerTwo lexerScanner;
+    private LexerScanner lexerScanner;
 
     /**
      * Create an lexer object.
@@ -43,7 +43,7 @@ public class Lexer {
      */
     private Lexer() {
 
-        this.lexerScanner = LexerScannerTwo.createLexerScanner();
+        this.lexerScanner = LexerScanner.createLexerScanner();
     }
 
     /**
@@ -90,7 +90,7 @@ public class Lexer {
     }
 
     /**
-     * Send the input to the {@link LexerScanner} to scan for the
+     * Send the input to the {@link LexerScannerOld} to scan for the
      * {@code Token} in the given input.
      * <p>
      * Right now this method will just print the tokens to the

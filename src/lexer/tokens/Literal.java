@@ -1,7 +1,7 @@
 package src.lexer.tokens;
 
 // custom import
-import src.lexer.LexerScanner;
+import src.lexer.LexerScannerOld;
 import src.lexer.TokenType;
 
 /**
@@ -14,7 +14,7 @@ import src.lexer.TokenType;
 public class Literal implements TokenAction {
 
     @Override
-    public void action(LexerScanner scanner) {
+    public void action(LexerScannerOld scanner) {
         
         scanner.checkForMultipleExpression(c -> c >= '0' && c <= '9');
         scanner.addTokenToList(TokenType.LITERAL);

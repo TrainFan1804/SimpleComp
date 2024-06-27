@@ -3,45 +3,22 @@ package src.lexer;
 // java import
 import java.util.List;
 import java.util.LinkedList;
-import java.util.Map;
-import java.util.HashMap;
-import java.util.function.Predicate;
-// custom import
-import src.lexer.tokens.TokenAction;
-import src.lexer.tokens.Var;
-import src.lexer.tokens.LeftSqtBracket;
-import src.lexer.tokens.Literal;
-import src.lexer.tokens.RightSqtBracket;
-import src.lexer.tokens.LeftBracket;
-import src.lexer.tokens.RightBracket;
-import src.lexer.tokens.Comma;
-import src.lexer.tokens.Plus;
-import src.lexer.tokens.Minus;
-import src.lexer.tokens.Multiplication;
-import src.lexer.tokens.Division;
-import src.lexer.tokens.Equal;
-import src.lexer.tokens.Bang;
-import src.lexer.tokens.Greater;
-import src.lexer.tokens.Less;
 
 /**
- * The class for the scanner. This class is scanning the given code.
+ * The main class for the lexer. This is the class that run the lexer.
  * <p>
  * This class is designed as a <b>Singleton<b>.
  * 
  * @author                              o.le
- * @version                             1.26
- * @since                               0.4
+ * @version                             1.30
+ * @since                               0.1
  */
 public class LexerScanner {
 
     private static LexerScanner staticLexerScanner;
 
     private Source source;
-    private BracketSource bracketSource;
-
     private List<Token> containedTokens;
-    private Map<Character, TokenAction> tokensActions;
 
     /**
      * Create an lexer scanner object.
@@ -58,31 +35,7 @@ public class LexerScanner {
         return LexerScanner.staticLexerScanner;
     }
 
-    /**
-     * Create a new lexer scanner.
-     */
-    private LexerScanner() {
-
-        this.tokensActions = new HashMap<>();
-        this.tokensActions.put('{', new LeftBracket());
-        this.tokensActions.put('}', new RightBracket());
-        this.tokensActions.put('[', new LeftSqtBracket());
-        this.tokensActions.put(']', new RightSqtBracket());
-        this.tokensActions.put(',', new Comma());
-        this.tokensActions.put('+', new Plus());
-        this.tokensActions.put('-', new Minus());
-        this.tokensActions.put('*', new Multiplication());
-        this.tokensActions.put('/', new Division());
-        this.tokensActions.put('=', new Equal());
-        this.tokensActions.put('!', new Bang());
-        this.tokensActions.put('>', new Greater());
-        this.tokensActions.put('<', new Less());
-        for (char c = '0'; c <= '9'; c++) {
-
-            this.tokensActions.put(c, new Literal());
-        }
-        this.tokensActions.put('v', new Var());
-    }
+    private LexerScanner() { }
 
     /**
      * Reset the scanner with a new source to scan.
@@ -93,7 +46,6 @@ public class LexerScanner {
 
         this.source = source;
         this.containedTokens = new LinkedList<>();
-        this.bracketSource = new BracketSource();
     }
 
     /**
@@ -110,31 +62,8 @@ public class LexerScanner {
             this.identifyToken();
         }
 
-        if (this.checkLeftBracketStack() != null) {
-
-            Lexer.error("There are to many open brackets!");
-        }
-
         this.containedTokens.add(new Token("", TokenType.EOF));
         return this.containedTokens;
-    }
-
-    /**
-     * Start the identifing process of the current token in the source.
-     */
-    private void identifyToken() {
-
-        char currentChar = this.source.getNextChar();
-
-        TokenAction a = this.tokensActions.get(currentChar);
-
-        if (a != null) {
-
-            a.action(this);
-        } else {
-            
-            Lexer.error("Invalid character: " + currentChar);
-        }
     }
 
     /**
@@ -150,63 +79,197 @@ public class LexerScanner {
     }
 
     /**
-     * Check if the current token include two characters. E.g. '!=' 
-     * or '=='.
-     * 
-     * @param expectedChar              The character that can be after
-     *                                  the current character.
-     * @return                          {@code true} when the current
-     *                                  token has two character {@code false}
-     *                                  when the token has only one
-     *                                  character.
+     * Start the identifing process of the current token in the source.
      */
-    public boolean checkNextChar(char expectedChar) {
+    private void identifyToken() {
 
-        return this.source.checkForDoubleExpression(expectedChar);
+        char currentChar = this.source.getNextChar();
+
+        switch(currentChar) {
+
+            // easy scan
+            case '{': this.addTokenToList(TokenType.LEFT_BRAC); break;
+            case '}': this.addTokenToList(TokenType.RIGHT_BRAC); break;
+            case '[': this.addTokenToList(TokenType.LEFT_SQBRA); break;
+            case ']': this.addTokenToList(TokenType.RIGHT_SQBRA); break;
+            case '+': this.addTokenToList(TokenType.PLUS); break;
+            case '-': this.addTokenToList(TokenType.MINUS); break;
+            case '*': this.addTokenToList(TokenType.MULT); break;
+            case '/': this.addTokenToList(TokenType.DIVISION); break;
+            case ',': this.addTokenToList(TokenType.COMMA); break;
+            // ignore whitspace
+            case ' ': case '\t':
+            case '\f': case '\r': break;
+
+            // medium scan
+            case '=': 
+                switch(this.source.getNextChar()){ 
+
+                    case '=': this.addTokenToList(TokenType.EQUAL_EQUAL); break;
+                    default:
+                        this.source.setCharBack();
+                        this.addTokenToList(TokenType.EQUAL);
+                }
+                break;
+            case '!':
+                switch(this.source.getNextChar()) {
+                    
+                    case '=': this.addTokenToList(TokenType.BANG_EQUAL);
+                    default:
+                        this.source.setCharBack();
+                        this.addTokenToList(TokenType.BANG);
+                }
+                break;
+            case '<': 
+                switch(this.source.getNextChar()) {
+                        
+                    case '=': this.addTokenToList(TokenType.LESS_EQUAL);
+                    default:
+                        this.source.setCharBack();
+                        this.addTokenToList(TokenType.LESS);
+                }
+                break;
+            case '>': this.addTokenToList(TokenType.GREATER);
+                switch(this.source.getNextChar()) {
+                            
+                    case '=': this.addTokenToList(TokenType.LESS_EQUAL);
+                    default:
+                        this.source.setCharBack();
+                        this.addTokenToList(TokenType.LESS);
+                }
+                break;
+            
+            // hard scan
+            case '0': case '1':
+            case '2': case '3':
+            case '4': case '5':
+            case '6': case '7':
+            case '8': case '9':
+                this.source.checkForMultipleExpression(c -> c >= '0' && c <= '9');
+                this.addTokenToList(TokenType.LITERAL);
+                break;
+            case 'a': case 'A':
+            case 'b': case 'B':
+            case 'c': case 'C':
+            case 'd': case 'D':
+            case 'e': case 'E':
+            case 'f': case 'F':
+            case 'g': case 'G':
+            case 'h': case 'H':
+            case 'i': case 'I':
+            case 'j': case 'J':
+            case 'k': case 'K':
+            case 'l': case 'L':
+            case 'm': case 'M':
+            case 'n': case 'N':
+            case 'o': case 'O':
+            case 'p': case 'P':
+            case 'q': case 'Q':
+            case 'r': case 'R':
+            case 's': case 'S':
+            case 't': case 'T':
+            case 'u': case 'U':
+            case 'v': case 'V':
+            case 'w': case 'W':
+            case 'x': case 'X':
+            case 'y': case 'Y':
+            case 'z': case 'Z':
+                this.checkForIdentifierOrKeyword();
+                break;
+            default:
+                Lexer.error("Invalid character: " + currentChar);
+        }
     }
 
-    /**
-     * Check if the current character is an literal with multiple character.
-     * 
-     * @param condition                 The condition that is checked.
-     */
-    public void checkForMultipleExpression(Predicate<Character> condition) {
+    private void checkForIdentifierOrKeyword() {
 
-        this.source.checkForMultipleExpression(condition);
-    }
+        this.source.saveCurrentChar();
+        // very bad
+        switch (this.source.getCurrentChar()) {
+            case 'v':
+                // check for "var"
+                if (this.source.getNextChar() == 'a') {
 
-    /**
-     * Get the lexeme that is currently scanning.
-     * 
-     * @return                          The string representation of
-     *                                  the lexeme.
-     */
-    public String getCurrentLexeme() {
+                    if (this.source.getNextChar() == 'r') {
 
-        return this.source.getLexeme();
-    }
+                        this.addTokenToList(TokenType.VAR);
+                        return;
+                    }
+                }
+            case 'p':
+                // check for "print"
+                if (this.source.getNextChar() == 'r') {
 
-    public void pushLeftBracketToStack(TokenType type) {
+                    if (this.source.getNextChar() == 'i') {
 
-        this.bracketSource.addBracket(this.bracketSource
-                                        .leftBracList, type);
-    }
+                        if (this.source.getNextChar() == 'n') {
 
-    public TokenType checkLeftBracketStack() {
+                            if (this.source.getNextChar() == 't') {
 
-        return this.bracketSource.checkBracketStack(this.bracketSource
-                                                    .leftBracList);
-    }
+                                this.addTokenToList(TokenType.PRINT);
+                                return;
+                            }
+                        }
+                    }
+                }
+            case 'i':
+                // check for "if"
+                if (this.source.getNextChar() == 'f') {
 
-    public void pushRightBracketToStacks(TokenType type) {
+                    this.addTokenToList(TokenType.IF);
+                    return;
+                }
+            case 'e':
+                // check for "else"
+                if (this.source.getNextChar() == 'l') {
 
-        this.bracketSource.addBracket(this.bracketSource
-                                        .rightBracList, type);
-    }
+                    if (this.source.getNextChar() == 's') {
 
-    public TokenType checkRightBracketStack() {
+                        if (this.source.getNextChar() == 'e') {
 
-        return this.bracketSource.checkBracketStack(this.bracketSource
-                                                        .rightBracList);
+                            this.addTokenToList(TokenType.ELSE);
+                            return;
+                        }
+                    }
+                }
+            case 'd':
+                // check for "def"
+                if (this.source.getNextChar() == 'e') {
+
+                    if (this.source.getNextChar() == 'f') {
+
+                        this.addTokenToList(TokenType.FUNCTION);
+                        return;
+                    }
+                }
+            case 'r':
+                // check for "return"
+                if (this.source.getNextChar() == 'e') {
+
+                    if (this.source.getNextChar() == 't') {
+
+                        if (this.source.getNextChar() == 'u') {
+
+                            if (this.source.getNextChar() == 'n') {
+
+                                this.addTokenToList(TokenType.RETURN);
+                                return;
+                            }
+                        }
+                    }
+                }
+            // default:
+            //     // non keyword are not recognize yet
+            //     this.addTokenToList(TokenType.IDENTIFIER);
+            //     break;
+            
+            // here reset the pointer to the start position of the lexeme 
+            // because the current lexeme is no keyword
+            this.source.resetCurrentChar();
+        }
+
+        this.source.checkForMultipleExpression(c -> c >= 'A' && c <= 'Z' 
+                                                || c >= 'a' && c <= 'z');
+        this.addTokenToList(TokenType.IDENTIFIER);
     }
 }
