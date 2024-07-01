@@ -37,6 +37,7 @@ public class Compiler {
 
         return Compiler.compiler;
     }
+    
     /**
      * Create a new compiler.
      */
