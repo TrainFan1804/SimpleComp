@@ -1,17 +1,23 @@
 package src.parser;
 
+import java.util.List;
+
+import src.lexer.Token;
+
 /**
  * The main class for the parser. This is the class that run the parser.
  * <p>
  * This class is designed as a <b>Singleton<b>.
  * 
  * @author                              o.le
- * @version                             0.5
+ * @version                             0.6
  * @since                               0.10
  */
 public class Parser {
 
     private static Parser parser;
+
+    private List<Token> tokenList;
 
     /**
      * Create an parser object.
@@ -32,8 +38,9 @@ public class Parser {
      */
     private Parser() { }
 
-    public void fillData() {
+    public void fillData(List<Token> list) {
 
-
+        this.tokenList = list;
+        System.out.println(tokenList.toString());
     }
 }

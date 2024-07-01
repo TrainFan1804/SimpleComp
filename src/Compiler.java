@@ -3,6 +3,7 @@ package src;
 // java import
 import java.io.File;
 // custom import
+import src.lexer.ScannedTokens;
 import src.lexer.Lexer;
 import src.parser.Parser;
 
@@ -12,7 +13,7 @@ import src.parser.Parser;
  * This class is designed as a <b>Singleton<b>.
  * 
  * @author                              o.le
- * @version                             0.3
+ * @version                             0.4
  * @since                               0.50
  */
 public class Compiler {
@@ -61,5 +62,7 @@ public class Compiler {
 
             this.lexer.runTerminal();
         }
+
+        this.parser.fillData(ScannedTokens.getScannedTokens());
     }
 }
